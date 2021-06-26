@@ -15,6 +15,7 @@ export default function Home ({
   const onSubmit = (e) => {
     e.preventDefault()
     localStorage.setItem('user', user)
+    router.push('/schedule')
   }
 
   const onChange = (e) => {
@@ -24,6 +25,10 @@ export default function Home ({
   const addNewUser = () => {
     localStorage.removeItem('user')
     router.reload()
+  }
+
+  const currentUser = () => {
+    router.push('/schedule')
   }
 
   if (isValidUser === false) {
@@ -62,7 +67,7 @@ export default function Home ({
               <h2 className={styles['login-form__pre-title']}>Welcome to ...</h2>
               <h1 className={styles['login-form__title']}>Bikers-Schedule</h1>
               <div className={styles['login-form__hr']}></div>
-              <div className={styles['login-form__prev-user']}>
+              <div className={styles['login-form__prev-user']} onClick={currentUser}>
                 <img src='/user.svg' alt='user' width='50'/>
                 <p>{user}</p>
               </div>
