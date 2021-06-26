@@ -1,152 +1,23 @@
-import { useState } from 'react'
-
 import { Layout } from 'components/Layout/Layout'
 
 import styles from 'styles/Schedule.module.css'
 
-export default function Schedule ({ user }) {
-  const [items, setItems] = useState({
-    data: [
-      {
-        time: '08:00',
-        bikers: 0,
-        selected: true
-      },
-      {
-        time: '08:30',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '09:00',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '09:30',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '10:00',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '10:30',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '11:00',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '11:30',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '12:00',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '12:30',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '13:00',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '13:30',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '14:00',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '14:30',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '15:00',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '15:30',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '16:00',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '16:30',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '17:00',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '17:30',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '18:00',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '18:30',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '19:00',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '19:30',
-        bikers: 8,
-        selected: false
-      },
-      {
-        time: '20:00',
-        bikers: 8,
-        selected: false
-      }
-    ]
-  })
+import { updateDataJSONbin } from 'services/fetch'
+
+export default function Schedule ({ user, schedule, setSchedule }) {
   const selectHour = (_id) => {
-    const auxItems = { ...items }
-    if (auxItems.data[_id].selected === false) {
-      if (auxItems.data[_id].bikers > 0) {
-        auxItems.data[_id].selected = true
-        auxItems.data[_id].bikers = auxItems.data[_id].bikers - 1
+    const auxItems = [...schedule]
+    if (auxItems[_id].users.find(_user => _user === user) === undefined) {
+      if (auxItems[_id].bikers > 0) {
+        auxItems[_id].users.push(user)
+        auxItems[_id].bikers = auxItems[_id].bikers - 1
       }
     } else {
-      auxItems.data[_id].selected = false
-      auxItems.data[_id].bikers = auxItems.data[_id].bikers + 1
+      auxItems[_id].users = auxItems[_id].users.filter(element => element !== user)
+      auxItems[_id].bikers = auxItems[_id].bikers + 1
     }
-
-    setItems(auxItems)
+    updateDataJSONbin({ data: auxItems })
+    setSchedule(auxItems)
   }
   return (
     <Layout
@@ -157,8 +28,8 @@ export default function Schedule ({ user }) {
           <h1>{user}</h1>
         </div>
         {
-          items.data.map((element, key) => {
-            if (element.selected) {
+          schedule.map((element, key) => {
+            if (element.users.find((element) => element === user) !== undefined) {
               return (
                 <div key={key} className={`${styles['schedule-item']} ${styles.selected}`} onClick={() => selectHour(key)}>
                   <div className="div">
