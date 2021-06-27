@@ -49,6 +49,7 @@ export default function Home ({
         <div className={styles.container}>
           <form onSubmit={onSubmit}>
             <div className={styles['login-form']}>
+              <img className={styles['login-form__logo']}src='/logo.png' alt='logo' width='120'/>
               <h2 className={styles['login-form__pre-title']}>Welcome to ...</h2>
               <h1 className={styles['login-form__title']}>Bikers-Schedule</h1>
               <input
@@ -76,6 +77,7 @@ export default function Home ({
         <div className={styles.container}>
           <form onSubmit={onSubmit}>
             <div className={styles['login-form']}>
+              <img className={styles['login-form__logo']}src='/logo.png' alt='logo' width='120'/>
               <h2 className={styles['login-form__pre-title']}>Welcome to ...</h2>
               <h1 className={styles['login-form__title']}>Bikers-Schedule</h1>
               <div className={styles['login-form__hr']}></div>
