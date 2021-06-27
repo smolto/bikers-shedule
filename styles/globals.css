@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+html { 
+  background: url('/background.png'); 
+}
+
 :root {
   --primary-color: #000;
   --secondary-color: #fff;
