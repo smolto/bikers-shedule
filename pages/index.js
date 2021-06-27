@@ -4,18 +4,30 @@ import { Layout } from 'components/Layout/Layout'
 
 import styles from 'styles/Home.module.css'
 
+import { fetchDataJSONbin } from 'services/fetch'
+
 export default function Home ({
   user,
   setUser,
   isValidUser,
-  setIsValidUser
+  setSchedule
 }) {
   const router = useRouter()
 
-  const onSubmit = (e) => {
+  const getData = async () => {
+    const res = await fetchDataJSONbin()
+    setSchedule(res.record.data, user)
+  }
+
+  const onSubmit = async (e) => {
     e.preventDefault()
-    localStorage.setItem('user', user)
-    router.push('/schedule')
+    if (user.length > 4) {
+      await getData()
+      localStorage.setItem('user', user)
+      router.push('/schedule')
+    } else {
+      alert('Invalid nickname length (min. 4)')
+    }
   }
 
   const onChange = (e) => {
